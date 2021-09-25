@@ -8,13 +8,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import androidx.compose.ui.Modifier
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import org.example.floodbusters.DataHolderAdapter
 import org.example.floodbusters.R
 import org.example.floodbusters.databinding.FragmentHomeBinding
+import org.example.floodbusters.dataholder.User
 import org.example.floodbusters.dataholder.WarningItemDataHolder
+import org.example.floodbusters.ui.AvatarHeader
 
 class HomeFragment : Fragment() {
 
@@ -36,9 +39,10 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textView
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        homeViewModel.text.observe(viewLifecycleOwner, {
+            binding.avatarHeader.setContent {
+                AvatarHeader(User(name = it), modifier = Modifier)
+            }
         })
 
         val listView: ListView = binding.listView

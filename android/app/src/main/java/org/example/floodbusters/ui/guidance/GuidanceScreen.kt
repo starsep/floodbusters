@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import kotlinx.coroutines.isActive
 import org.example.floodbusters.R
+import org.example.floodbusters.dataholder.User
+import org.example.floodbusters.ui.AvatarHeader
 
 data class Message(val sos: Boolean, val text: String, val time: String, val incoming: Boolean)
 
@@ -38,7 +40,6 @@ fun GuidanceScreen() {
     val angle1 = remember { Animatable(initialValue = 160f) }
     val angle2 = remember { Animatable(initialValue = 220f) }
     val angle3 = remember { Animatable(initialValue = 300f) }
-    data class User(val name: String)
     val user = User(name = "Anna L.")
     val volume = remember { mutableStateOf(0f) }
     val messages = listOf(
@@ -47,25 +48,16 @@ fun GuidanceScreen() {
         Message(sos = false, text = "yes I understand, now I go down the stairs and walk to the street.", time = "16:52", incoming = false),
     )
 
-    val image: Painter = painterResource(id = R.drawable.user_avatar)
     ConstraintLayout(Modifier.background(color = Color.White)) {
-        val (avatar, name, guide, rings, startButton, volumeSlider, volumeLabel, chat) = createRefs()
-        Image(painter = image, contentDescription = "user avatar",
-            Modifier
-                .constrainAs(avatar) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                }
-                .padding(8.dp))
-        Text(user.name, Modifier.constrainAs(name) {
-            top.linkTo(avatar.top)
-            bottom.linkTo(avatar.bottom)
-            start.linkTo(avatar.end)
-        }, style = MaterialTheme.typography.subtitle1, fontWeight = FontWeight.Bold,)
+        val (avatarHeader, guide, rings, startButton, volumeSlider, volumeLabel, chat) = createRefs()
+        AvatarHeader(user = user, modifier = Modifier.constrainAs(avatarHeader) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+        })
         Text("Guide me to a safe place",
             Modifier
                 .constrainAs(guide) {
-                    top.linkTo(avatar.bottom)
+                    top.linkTo(avatarHeader.bottom)
                     start.linkTo(parent.start)
                 }
                 .padding(horizontal = 8.dp),
