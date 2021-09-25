@@ -48,8 +48,10 @@ class HomeFragment : Fragment() {
         val listView: ListView = binding.listView
 
 
-        val dataHolderDanger = WarningItemDataHolder("red", "High flood risk", "The water level is raising rapidly")
-        val dataHolderWarning = WarningItemDataHolder("yellow", "Warning flood", "")
+        val dataHolderDanger = WarningItemDataHolder(R.drawable.circle_red, "High flood risk", "The water level is raising rapidly. " +
+                "The house on the 34th Street Side of the lake is at high risk of flooding in the next few hours.\n" +
+                "> You need to know this, to stay safe")
+        val dataHolderWarning = WarningItemDataHolder(R.drawable.circle_yellow, "Warning flood", "")
 
         val list = mutableListOf<WarningItemDataHolder>()
         list.add(dataHolderDanger)

@@ -31,8 +31,8 @@ public class DataHolderAdapter extends ArrayAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(this.resourceId, null);//set layout for displaying items
-        /*ImageView icon = (ImageView) view.findViewById(R.id.icon);//get id for image view
-        icon.setImageResource(countryFlags[i]);*///set image of the item’s
+        ImageView icon = (ImageView) view.findViewById(R.id.icon);
+        icon.setImageResource(this.items.get(i).getWarningColor());//set image of the item’s
 
         TextView shortTextView = (TextView) view.findViewById(R.id.warningShortText);
         shortTextView.setText(this.items.get(i).getWarningShortText());

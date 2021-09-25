@@ -2,21 +2,21 @@ package org.example.floodbusters.dataholder;
 
 public class WarningItemDataHolder {
 
-    private String warningColor;
+    private int warningColor;
     private String warningShortText;
     private String warningLongText;
 
-    public WarningItemDataHolder(String color, String shortText, String longText) {
+    public WarningItemDataHolder(int color, String shortText, String longText) {
         this.warningColor = color;
         this.warningShortText = shortText;
         this.warningLongText = longText;
     }
 
-    public String getWarningColor() {
+    public int getWarningColor() {
         return warningColor;
     }
 
-    public void setWarningColor(String warningColor) {
+    public void setWarningColor(int warningColor) {
         this.warningColor = warningColor;
     }
 
