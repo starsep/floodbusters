@@ -18,13 +18,13 @@
         tools:layout="@layout/fragment_guidance" />
 
     <fragment
-        android:id="@+id/navigation_status"
-        android:name="org.example.floodbusters.ui.status.StatusFragment"
+        android:id="@+id/navigation_group"
+        android:name="org.example.floodbusters.ui.group.GroupFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_group" />
     <fragment
-        android:id="@+id/navigation_profile2"
-        android:name="org.example.floodbusters.ui.status.StatusFragment"
+        android:id="@+id/navigation_profile"
+        android:name="org.example.floodbusters.ui.group.GroupFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_group" />
 </navigation>

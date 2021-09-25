@@ -33,8 +33,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMap() {
-        // TODO: remove API key from source code
-        ArcGISRuntimeEnvironment.setApiKey("AAPK656287b000314dccad848cf9cca8fde4En6PvvnSTslZpt1ysboHHuR6B3U4aUOgm46XUD04eGM8488LbFgFW7CdL3SE1jFD")
         mapView.map = ArcGISMap(BasemapStyle.ARCGIS_TOPOGRAPHIC)
         mapView.setViewpoint(Viewpoint(47.3774, 8.4766, 72000.0))
     }

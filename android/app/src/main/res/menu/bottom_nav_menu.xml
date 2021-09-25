@@ -12,7 +12,7 @@
         android:title="@string/title_guidance" />
 
     <item
-        android:id="@+id/navigation_status"
+        android:id="@+id/navigation_group"
         android:icon="@drawable/nav_status"
         android:title="@string/title_notifications" />
     <item
