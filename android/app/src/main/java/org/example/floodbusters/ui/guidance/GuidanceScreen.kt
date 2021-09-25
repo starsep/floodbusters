@@ -1,55 +1,56 @@
 package org.example.floodbusters.ui.guidance
 
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import kotlinx.coroutines.isActive
-import org.example.floodbusters.R
-import org.example.floodbusters.api.apiService
-import org.example.floodbusters.dataholder.User
+import kotlinx.coroutines.*
+import org.example.floodbusters.api.createApiService
 import org.example.floodbusters.dataholder.user
 import org.example.floodbusters.ui.AvatarHeader
 
 data class Message(val sos: Boolean, val text: String, val time: String, val incoming: Boolean)
 
 val rubyColor = Color(0xFF9C303D)
+val exampleMessages = listOf(
+    Message(sos = false, text = "Hi Anna, according to the information we received, you are now in the building on the 34th Street Side of the Lake", time = "16:45", incoming = true),
+    Message(sos = false, text = "I will then guide you to a safe place. It is important that you stay calm, ok?", time = "16:47", incoming = true),
+    Message(sos = false, text = "yes I understand, now I go down the stairs and walk to the street.", time = "16:52", incoming = false),
+)
+
+val locations = listOf(
+    48.022121 to 8.563368,
+    47.372240 to 8.492740,
+    46.927514 to 7.440003,
+)
 
 @Composable
 fun GuidanceScreen() {
+    val apiService = remember { createApiService() }
     val angle1 = remember { Animatable(initialValue = 160f) }
     val angle2 = remember { Animatable(initialValue = 220f) }
     val angle3 = remember { Animatable(initialValue = 300f) }
     val volume = remember { mutableStateOf(0.4f) }
-    val messages = listOf(
-        Message(sos = true, text = "Hi Anna, according to the information we received, you are now in the building on the 34th Street Side of the Lake", time = "16:45", incoming = true),
-        Message(sos = false, text = "I will then guide you to a safe place. It is important that you stay calm, ok?", time = "16:47", incoming = true),
-        Message(sos = false, text = "yes I understand, now I go down the stairs and walk to the street.", time = "16:52", incoming = false),
-    )
-    val scrollState = rememberScrollState()
-    ConstraintLayout(Modifier.background(color = Color.White)) {
+    val buttonColor = remember { mutableStateOf(Color.LightGray) }
+    val messages = remember { mutableStateOf(emptyList<Message>()) }
+    ConstraintLayout(Modifier.background(color = Color.White).fillMaxHeight()) {
         val (avatarHeader, guide, rings, startButton, volumeSlider, volumeLabel, chat) = createRefs()
         AvatarHeader(user = user, modifier = Modifier.constrainAs(avatarHeader) {
             top.linkTo(parent.top)
@@ -72,14 +73,24 @@ fun GuidanceScreen() {
                 end.linkTo(parent.end)
                 top.linkTo(rings.top)
                 bottom.linkTo(rings.bottom)
-            }.scrollable(scrollState, Orientation.Vertical)) {
+            }) {
             Box(modifier = Modifier
                 .size(80.dp)
                 .clip(CircleShape)
-                .background(Color.LightGray)
+                .background(buttonColor.value)
                 .wrapContentSize(align = Alignment.Center)
                 .clickable {
-                    println(apiService.getRisk())
+                    GlobalScope.launch {
+                        val (latitude, longitude) = locations.first()
+                        val risk = apiService.getRisk(latitude = latitude, longitude = longitude)
+                        buttonColor.value = if (risk.isSpotSafe) Color.Green else rubyColor
+                        if (!risk.isSpotSafe)
+                            messages.value = messages.value.plus(Message(sos = true, text = risk.advise, time = "16:42", incoming = true))
+                        for (message in exampleMessages) {
+                            delay(500L)
+                            messages.value = messages.value.plus(message)
+                        }
+                    }
                 }) {
                 Text("Start", modifier = Modifier
                     .fillMaxSize()
@@ -116,7 +127,7 @@ fun GuidanceScreen() {
             end.linkTo(volumeSlider.end)
             top.linkTo(volumeSlider.bottom)
         })
-        ChatView(messages = messages, Modifier.constrainAs(chat) {
+        ChatView(messages = messages.value, Modifier.constrainAs(chat) {
             top.linkTo(volumeLabel.bottom)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
@@ -189,6 +200,7 @@ fun ChatMessage(message: Message) {
             start.linkTo(if (message.incoming) text.end else sos.end)
             end.linkTo(if (message.incoming) parent.end else text.start)
             top.linkTo(parent.top)
+            bottom.linkTo(parent.bottom)
         })
     }
 }
