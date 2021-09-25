@@ -14,8 +14,8 @@
     <fragment
         android:id="@+id/navigation_guidance"
         android:name="org.example.floodbusters.ui.guidance.GuidanceFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:label="@string/title_guidance"
+        tools:layout="@layout/fragment_guidance" />
 
     <fragment
         android:id="@+id/navigation_status"

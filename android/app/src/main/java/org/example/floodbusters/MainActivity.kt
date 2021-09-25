@@ -21,20 +21,15 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 @DelicateCoroutinesApi
 class MainActivity : AppCompatActivity() {
-    private val activityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
-
-    private val mapView: MapView by lazy {
-        activityMainBinding.mapView
-    }
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val mapView: MapView by lazy { binding.mapView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(activityMainBinding.root)
+        setContentView(binding.root)
         setupMap()
-        setupLocation()
-        getLastLocation()
+//        setupLocation()
+//        getLastLocation()
     }
 
     private fun setupMap() {
