@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Floodbusters</string>
+    <string name="title_activity_pre_information">PreInformationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">SOS</string>
+    <string name="title_notifications">Group</string>
+    <string name="title_profile">Profile</string>
+    <string name="username">Anna L.</string>
 </resources>
