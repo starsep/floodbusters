@@ -1,8 +1,8 @@
 package org.example.floodbusters.ui.guidance
 
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -12,7 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import kotlinx.coroutines.isActive
 import org.example.floodbusters.R
+import org.example.floodbusters.api.apiService
 import org.example.floodbusters.dataholder.User
 import org.example.floodbusters.dataholder.user
 import org.example.floodbusters.ui.AvatarHeader
@@ -47,7 +48,7 @@ fun GuidanceScreen() {
         Message(sos = false, text = "I will then guide you to a safe place. It is important that you stay calm, ok?", time = "16:47", incoming = true),
         Message(sos = false, text = "yes I understand, now I go down the stairs and walk to the street.", time = "16:52", incoming = false),
     )
-
+    val scrollState = rememberScrollState()
     ConstraintLayout(Modifier.background(color = Color.White)) {
         val (avatarHeader, guide, rings, startButton, volumeSlider, volumeLabel, chat) = createRefs()
         AvatarHeader(user = user, modifier = Modifier.constrainAs(avatarHeader) {
@@ -63,21 +64,36 @@ fun GuidanceScreen() {
                 .padding(horizontal = 8.dp),
             style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold,
         )
-        Column(modifier = Modifier.fillMaxWidth().wrapContentSize(Alignment.Center).constrainAs(startButton) {
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-            top.linkTo(rings.top)
-            bottom.linkTo(rings.bottom)
-        }) {
-            Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(Color.LightGray).wrapContentSize(align = Alignment.Center)) {
-                Text("Start", modifier = Modifier.fillMaxSize().padding(vertical = 24.dp), textAlign = TextAlign.Center, style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .constrainAs(startButton) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                top.linkTo(rings.top)
+                bottom.linkTo(rings.bottom)
+            }.scrollable(scrollState, Orientation.Vertical)) {
+            Box(modifier = Modifier
+                .size(80.dp)
+                .clip(CircleShape)
+                .background(Color.LightGray)
+                .wrapContentSize(align = Alignment.Center)
+                .clickable {
+                    println(apiService.getRisk())
+                }) {
+                Text("Start", modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 24.dp), textAlign = TextAlign.Center, style = MaterialTheme.typography.h6, fontWeight = FontWeight.Bold)
             }
         }
-        Canvas(modifier = Modifier.constrainAs(rings) {
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-            top.linkTo(guide.bottom)
-        }.size(240.dp).padding(8.dp)) {
+        Canvas(modifier = Modifier
+            .constrainAs(rings) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                top.linkTo(guide.bottom)
+            }
+            .size(240.dp)
+            .padding(8.dp)) {
             fun roundStroke(width: Float) = Stroke(width = width, cap = StrokeCap.Round)
             drawArc(color = rubyColor, angle1.value, 320f, useCenter = false, style = roundStroke(20f))
             drawArc(color = rubyColor, angle2.value, 320f, useCenter = false, style = roundStroke(10f), topLeft = Offset(80f, 80f), size = Size(size.width - 160f, size.height - 160f))
@@ -104,6 +120,7 @@ fun GuidanceScreen() {
             top.linkTo(volumeLabel.bottom)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
+            bottom.linkTo(parent.bottom, 64.dp)
         })
     }
 

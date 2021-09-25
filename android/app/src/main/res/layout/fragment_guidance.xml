@@ -5,10 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.guidance.GuidanceFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/guidanceComposeView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         />
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
