@@ -17,7 +17,7 @@ data class SaveSpot(
 )
 
 data class Status(
-    @field:Json(name = "last_status") val lastStatus: String,
+    @field:Json(name = "last_update") val lastUpdate: String,
     @field:Json(name = "status") val status: String,
 )
 

@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,20 +20,24 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.example.floodbusters.R
+import org.example.floodbusters.api.createApiService
 import org.example.floodbusters.dataholder.GroupMember
-import org.example.floodbusters.dataholder.User
 import org.example.floodbusters.dataholder.user
 import org.example.floodbusters.ui.AvatarHeader
 
+val surnames = listOf("Lanz", "Berg", "Senn")
+val exampleGroupData = mapOf(
+    "Lanz" to GroupMember(avatarId = R.drawable.group0, isSafe = true, name = "Martin Lanz", lastCheck = "26.09.21 21:00"),
+    "Berg" to GroupMember(avatarId = R.drawable.group1, isSafe = true, name = "Susane Berg", lastCheck = "26.09.21 20:00"),
+    "Senn" to GroupMember(avatarId = R.drawable.group2, isSafe = false, name = "Nicole Senn", lastCheck = "2 minutes ago"),
+)
+
 @Composable
 fun GroupScreen() {
-    // TODO: move data
-    val group = listOf(
-        GroupMember(avatarId = R.drawable.group0, isSafe = true, name = "Martin Lanz", lastCheck = "26.09.21 21:00"),
-        GroupMember(avatarId = R.drawable.group1, isSafe = true, name = "Susane Berg", lastCheck = "26.09.21 20:00"),
-        GroupMember(avatarId = R.drawable.group2, isSafe = false, name = "Nicole Senn", lastCheck = "2 minutes ago"),
-    )
+    val group = remember { mutableStateOf(exampleGroupData) }
     val plusIconPainter: Painter = painterResource(id = R.drawable.ic_plus)
     val scrollState = remember { ScrollState(initial = 0)}
     ConstraintLayout(modifier = Modifier
@@ -67,7 +73,7 @@ fun GroupScreen() {
         GroupStatus(modifier = Modifier.constrainAs(groupAvatars) {
             start.linkTo(myGroupTitle.start)
             top.linkTo(myGroupTitle.bottom)
-        }, group = group)
+        }, group = group.value.values)
         Text(
             text = "Live social media information",
             modifier = Modifier.constrainAs(socialMediaHeader) {
@@ -88,10 +94,20 @@ fun GroupScreen() {
         }.height(400.dp).fillMaxWidth()) {
         }*/
     }
+    LaunchedEffect("get") {
+        val apiService = createApiService()
+        GlobalScope.launch {
+            for (name in surnames) {
+                val oldStatus = group.value.getValue(name)
+                val status = apiService.getStatus(name)
+                group.value = group.value.plus(name to oldStatus.copy(lastCheck = status.lastUpdate))
+            }
+        }
+    }
 }
 
 @Composable
-fun GroupStatus(modifier: Modifier, group: List<GroupMember>) {
+fun GroupStatus(modifier: Modifier, group: Collection<GroupMember>) {
     Column(modifier = modifier) {
         for (member in group) GroupMemberStatus(member)
     }
@@ -118,10 +134,14 @@ fun GroupMemberStatus(groupMember: GroupMember) {
         val iconPainter = painterResource(id = if (groupMember.isSafe) R.drawable.ic_check_circle_outline else R.drawable.ic_question_mark)
         val iconBackground = if (groupMember.isSafe) Color.Transparent else color
         val iconTint = if (groupMember.isSafe) color else Color.Black
-        Icon(painter = iconPainter, contentDescription = if (groupMember.isSafe) "checkmark" else "question mark", modifier = Modifier.size(16.dp).constrainAs(icon) {
-            bottom.linkTo(avatar.bottom, 8.dp)
-            end.linkTo(avatar.end, 8.dp)
-        }.clip(CircleShape).background(color = iconBackground), tint = iconTint)
+        Icon(painter = iconPainter, contentDescription = if (groupMember.isSafe) "checkmark" else "question mark", modifier = Modifier
+            .size(16.dp)
+            .constrainAs(icon) {
+                bottom.linkTo(avatar.bottom, 8.dp)
+                end.linkTo(avatar.end, 8.dp)
+            }
+            .clip(CircleShape)
+            .background(color = iconBackground), tint = iconTint)
         Text(text = groupMember.name, modifier = Modifier.constrainAs(name) {
             start.linkTo(avatar.end)
             bottom.linkTo(status.top)
