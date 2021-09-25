@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.compose.foundation.layout.height
+import android.widget.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -20,6 +21,7 @@ import org.example.floodbusters.databinding.FragmentHomeBinding
 import org.example.floodbusters.dataholder.User
 import org.example.floodbusters.dataholder.WarningItemDataHolder
 import org.example.floodbusters.dataholder.user
+import org.example.floodbusters.services.AlarmDetection
 import org.example.floodbusters.ui.AvatarHeader
 
 class HomeFragment : Fragment() {
@@ -68,6 +70,15 @@ class HomeFragment : Fragment() {
 
         // attach the array adapter with list view
         listView.adapter = adapter
+
+        val infografik: ImageView = binding.imageView2
+
+        infografik.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View?) {
+                val detector = AlarmDetection()
+                detector.startDetection()
+            }
+        })
 
         return root
     }

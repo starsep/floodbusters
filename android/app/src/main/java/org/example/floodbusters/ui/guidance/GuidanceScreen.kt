@@ -1,5 +1,6 @@
 package org.example.floodbusters.ui.guidance
 
+import android.app.Activity
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -11,6 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -24,6 +29,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import kotlinx.coroutines.*
 import org.example.floodbusters.api.createApiService
 import org.example.floodbusters.dataholder.user
+import org.example.floodbusters.services.LocationService
 import org.example.floodbusters.ui.AvatarHeader
 
 data class Message(val sos: Boolean, val text: String, val time: String, val incoming: Boolean)
@@ -44,6 +50,7 @@ val locations = listOf(
 @Composable
 fun GuidanceScreen() {
     val apiService = remember { createApiService() }
+fun GuidanceScreen(activity: Activity) {
     val angle1 = remember { Animatable(initialValue = 160f) }
     val angle2 = remember { Animatable(initialValue = 220f) }
     val angle3 = remember { Animatable(initialValue = 300f) }
@@ -55,6 +62,14 @@ fun GuidanceScreen() {
         messages.value = messages.value.plus(message)
     }
     ConstraintLayout(Modifier.background(color = Color.White).fillMaxHeight()) {
+    val messages = listOf(
+        Message(sos = true, text = "Hi Anna, according to the information we received, you are now in the building on the 34th Street Side of the Lake", time = "16:45", incoming = true),
+        Message(sos = false, text = "I will then guide you to a safe place. It is important that you stay calm, ok?", time = "16:47", incoming = true),
+        Message(sos = false, text = "yes I understand, now I go down the stairs and walk to the street.", time = "16:52", incoming = false),
+    )
+    val scrollState = rememberScrollState()
+    val locationService = LocationService(activity)
+    ConstraintLayout(Modifier.background(color = Color.White)) {
         val (avatarHeader, guide, rings, startButton, volumeSlider, volumeLabel, chat) = createRefs()
         AvatarHeader(user = user, modifier = Modifier.constrainAs(avatarHeader) {
             top.linkTo(parent.top)

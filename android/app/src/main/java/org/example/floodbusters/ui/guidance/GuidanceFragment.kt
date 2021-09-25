@@ -1,5 +1,6 @@
 package org.example.floodbusters.ui.guidance
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,7 @@ class GuidanceFragment : Fragment() {
         _binding = FragmentGuidanceBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.guidanceComposeView.setContent {
-            GuidanceScreen()
+            GuidanceScreen(activity)
         }
         return root
     }

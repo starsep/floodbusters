@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupMap()
-//        setupLocation()
-//        getLastLocation()
+        setupLocation()
+        getLastLocation()
     }
 
     private fun setupMap() {
