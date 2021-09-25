@@ -21,6 +21,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import org.example.floodbusters.R
 import org.example.floodbusters.dataholder.GroupMember
 import org.example.floodbusters.dataholder.User
+import org.example.floodbusters.dataholder.user
 import org.example.floodbusters.ui.AvatarHeader
 
 @Composable
@@ -37,7 +38,7 @@ fun GroupScreen() {
         .background(Color.White)
         .scrollable(scrollState, orientation = Orientation.Vertical)) {
         val (avatarHeader, groupDescription, myGroupTitle, addToGroupButton, groupAvatars, socialMediaHeader, socialMediaMap) = createRefs()
-        AvatarHeader(user = User(name = "Anna L."), modifier = Modifier.constrainAs(avatarHeader) {
+        AvatarHeader(user = user, modifier = Modifier.constrainAs(avatarHeader) {
             start.linkTo(parent.start)
             top.linkTo(parent.top)
         })

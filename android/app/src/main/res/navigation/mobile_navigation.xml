@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_group" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="org.example.floodbusters.ui.group.GroupFragment"
+        android:name="org.example.floodbusters.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_group" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -17,6 +17,7 @@ import org.example.floodbusters.R
 import org.example.floodbusters.databinding.FragmentHomeBinding
 import org.example.floodbusters.dataholder.User
 import org.example.floodbusters.dataholder.WarningItemDataHolder
+import org.example.floodbusters.dataholder.user
 import org.example.floodbusters.ui.AvatarHeader
 
 class HomeFragment : Fragment() {
@@ -41,7 +42,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.text.observe(viewLifecycleOwner, {
             binding.avatarHeader.setContent {
-                AvatarHeader(User(name = it), modifier = Modifier)
+                AvatarHeader(user.copy(name = it), modifier = Modifier)
             }
         })
 

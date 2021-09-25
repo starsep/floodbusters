@@ -29,6 +29,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import kotlinx.coroutines.isActive
 import org.example.floodbusters.R
 import org.example.floodbusters.dataholder.User
+import org.example.floodbusters.dataholder.user
 import org.example.floodbusters.ui.AvatarHeader
 
 data class Message(val sos: Boolean, val text: String, val time: String, val incoming: Boolean)
@@ -40,7 +41,6 @@ fun GuidanceScreen() {
     val angle1 = remember { Animatable(initialValue = 160f) }
     val angle2 = remember { Animatable(initialValue = 220f) }
     val angle3 = remember { Animatable(initialValue = 300f) }
-    val user = User(name = "Anna L.")
     val volume = remember { mutableStateOf(0f) }
     val messages = listOf(
         Message(sos = true, text = "Hi Anna, according to the information we received, you are now in the building on the 34th Street Side of the Lake", time = "16:45", incoming = true),
