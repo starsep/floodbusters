@@ -24,8 +24,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.example.floodbusters.R
 import org.example.floodbusters.api.createApiService
-import org.example.floodbusters.dataholder.GroupMember
-import org.example.floodbusters.dataholder.user
+import org.example.floodbusters.api.GroupMember
+import org.example.floodbusters.api.user
 import org.example.floodbusters.ui.AvatarHeader
 
 val surnames = listOf("Lanz", "Berg", "Senn")
@@ -101,7 +101,7 @@ fun GroupScreen() {
             for (name in surnames) {
                 val oldStatus = group.value.getValue(name)
                 val status = apiService.getStatus(name)
-                group.value = group.value.plus(name to oldStatus.copy(lastCheck = status.lastUpdate))
+                group.value = group.value.plus(name to oldStatus.copy(lastCheck = status.lastUpdate, isSafe = status.status == "is in a safe place"))
             }
         }
     }

@@ -1,4 +1,4 @@
-package org.example.floodbusters.dataholder
+package org.example.floodbusters.api
 
 data class User(
     val name: String,

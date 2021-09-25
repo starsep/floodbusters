@@ -93,7 +93,7 @@ fun ConsentScreen(goNext: () -> Unit) {
                     }, style = MaterialTheme.typography.subtitle1)
                 }
             }
-            TextButton(onClick = { /*TODO*/ }, modifier = Modifier.constrainAs(startButton) {
+            TextButton(onClick = goNext, modifier = Modifier.constrainAs(startButton) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
                 top.linkTo(allowLocation.bottom)

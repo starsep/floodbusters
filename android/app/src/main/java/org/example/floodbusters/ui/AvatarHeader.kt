@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import org.example.floodbusters.R
-import org.example.floodbusters.dataholder.User
+import org.example.floodbusters.api.User
 
 @Composable
 fun AvatarHeader(user: User, modifier: Modifier) {

@@ -19,9 +19,7 @@ class GuidanceFragment : Fragment() {
     ): View {
         _binding = FragmentGuidanceBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.guidanceComposeView.setContent {
-            GuidanceScreen(activity)
-        }
+        binding.guidanceComposeView.setContent { GuidanceScreen(requireActivity()) }
         return root
     }
 

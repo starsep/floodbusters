@@ -28,12 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import kotlinx.coroutines.*
 import org.example.floodbusters.api.createApiService
-import androidx.fragment.app.FragmentActivity
-import kotlinx.coroutines.isActive
-import org.example.floodbusters.R
-import org.example.floodbusters.api.apiService
-import org.example.floodbusters.dataholder.User
-import org.example.floodbusters.dataholder.user
+import org.example.floodbusters.api.user
 import org.example.floodbusters.services.LocationService
 import org.example.floodbusters.ui.AvatarHeader
 
@@ -53,10 +48,8 @@ val locations = listOf(
 )
 
 @Composable
-fun GuidanceScreen() {
-    val apiService = remember { createApiService() }
 fun GuidanceScreen(activity: Activity) {
-fun GuidanceScreen(activity: FragmentActivity?) {
+    val apiService = remember { createApiService() }
     val angle1 = remember { Animatable(initialValue = 160f) }
     val angle2 = remember { Animatable(initialValue = 220f) }
     val angle3 = remember { Animatable(initialValue = 300f) }
@@ -67,13 +60,6 @@ fun GuidanceScreen(activity: FragmentActivity?) {
     fun addMessage(message: Message) {
         messages.value = messages.value.plus(message)
     }
-    ConstraintLayout(Modifier.background(color = Color.White).fillMaxHeight()) {
-    val messages = listOf(
-        Message(sos = true, text = "Hi Anna, according to the information we received, you are now in the building on the 34th Street Side of the Lake", time = "16:45", incoming = true),
-        Message(sos = false, text = "I will then guide you to a safe place. It is important that you stay calm, ok?", time = "16:47", incoming = true),
-        Message(sos = false, text = "yes I understand, now I go down the stairs and walk to the street.", time = "16:52", incoming = false),
-    )
-    val scrollState = rememberScrollState()
     val locationService = LocationService(activity)
     ConstraintLayout(Modifier.background(color = Color.White)) {
         val (avatarHeader, guide, rings, startButton, volumeSlider, volumeLabel, chat) = createRefs()
