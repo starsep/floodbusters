@@ -23,7 +23,7 @@
 		"project_id":"736430079244631585",
 		"app_id":"102882039",
 		"api_key":"CgB6e3x9N/uhUh4BjUEAUNRwZTbBnCtNQ7pdyyhDSEfbVZR2BibGaY1Wosx8JWmZKzJfDtWKPqu950LXFvZ4z6BI",
-		"package_name":"com.huawei.hackzurich"
+		"package_name":"org.example.floodbusters"
 	},
 	"oauth_client":{
 		"client_id":"102882039",
@@ -31,7 +31,7 @@
 	},
 	"app_info":{
 		"app_id":"102882039",
-		"package_name":"com.huawei.hackzurich"
+		"package_name":"org.example.floodbusters"
 	},
 	"service":{
 		"analytics":{
@@ -53,12 +53,12 @@
 	"configuration_version":"3.0",
 	"appInfos":[
 		{
-			"package_name":"com.huawei.hackzurich",
+			"package_name":"org.example.floodbusters",
 			"client":{
 				"app_id":"102882039"
 			},
 			"app_info":{
-				"package_name":"com.huawei.hackzurich",
+				"package_name":"org.example.floodbusters",
 				"app_id":"102882039"
 			},
 			"oauth_client":{
