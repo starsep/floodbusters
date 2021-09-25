@@ -50,6 +50,10 @@ fun GuidanceScreen() {
     val volume = remember { mutableStateOf(0.4f) }
     val buttonColor = remember { mutableStateOf(Color.LightGray) }
     val messages = remember { mutableStateOf(emptyList<Message>()) }
+
+    fun addMessage(message: Message) {
+        messages.value = messages.value.plus(message)
+    }
     ConstraintLayout(Modifier.background(color = Color.White).fillMaxHeight()) {
         val (avatarHeader, guide, rings, startButton, volumeSlider, volumeLabel, chat) = createRefs()
         AvatarHeader(user = user, modifier = Modifier.constrainAs(avatarHeader) {
@@ -84,11 +88,26 @@ fun GuidanceScreen() {
                         val (latitude, longitude) = locations.first()
                         val risk = apiService.getRisk(latitude = latitude, longitude = longitude)
                         buttonColor.value = if (risk.isSpotSafe) Color.Green else rubyColor
-                        if (!risk.isSpotSafe)
-                            messages.value = messages.value.plus(Message(sos = true, text = risk.advise, time = "16:42", incoming = true))
-                        for (message in exampleMessages) {
-                            delay(500L)
-                            messages.value = messages.value.plus(message)
+                        if (!risk.isSpotSafe) {
+                            addMessage(Message(
+                                sos = true,
+                                text = risk.advise,
+                                time = "16:42",
+                                incoming = true
+                            ))
+                            val safeSpot = apiService.getSaveSpot(latitude = latitude, longitude = longitude)
+                            delay(200L)
+                            addMessage(
+                                Message(
+                                    sos = false,
+                                    text = "Safe spot is (${safeSpot.latitude}, ${safeSpot.longitude})",
+                                    time = "16:43",
+                                    incoming = true,
+                                ))
+                            for (message in exampleMessages) {
+                                delay(500L)
+                                addMessage(message)
+                            }
                         }
                     }
                 }) {
