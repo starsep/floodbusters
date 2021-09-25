@@ -28,6 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import kotlinx.coroutines.*
 import org.example.floodbusters.api.createApiService
+import androidx.fragment.app.FragmentActivity
+import kotlinx.coroutines.isActive
+import org.example.floodbusters.R
+import org.example.floodbusters.api.apiService
+import org.example.floodbusters.dataholder.User
 import org.example.floodbusters.dataholder.user
 import org.example.floodbusters.services.LocationService
 import org.example.floodbusters.ui.AvatarHeader
@@ -51,6 +56,7 @@ val locations = listOf(
 fun GuidanceScreen() {
     val apiService = remember { createApiService() }
 fun GuidanceScreen(activity: Activity) {
+fun GuidanceScreen(activity: FragmentActivity?) {
     val angle1 = remember { Animatable(initialValue = 160f) }
     val angle2 = remember { Animatable(initialValue = 220f) }
     val angle3 = remember { Animatable(initialValue = 300f) }
