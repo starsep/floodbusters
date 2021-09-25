@@ -49,7 +49,8 @@ fun GroupScreen() {
             top.linkTo(parent.top)
         })
         Text(text = "In case of an emergency, you may need to know where the people you love are. To form a group we need the approval of the person you want to join, because in case of an emergency we will track the movements of each person in order to induce if the person is safe.",
-            Modifier
+            style = MaterialTheme.typography.subtitle1,
+            modifier = Modifier
                 .constrainAs(groupDescription) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
@@ -74,14 +75,14 @@ fun GroupScreen() {
             start.linkTo(myGroupTitle.start)
             top.linkTo(myGroupTitle.bottom)
         }, group = group.value.values)
-        Text(
+        /*Text(
             text = "Live social media information",
             modifier = Modifier.constrainAs(socialMediaHeader) {
                 start.linkTo(parent.start)
                 top.linkTo(groupAvatars.bottom)
             })
 
-        /*AndroidView(factory = {
+        AndroidView(factory = {
             MapView(it).apply {
                 map = ArcGISMap(BasemapStyle.ARCGIS_IMAGERY)
                 setViewpoint(Viewpoint(47.3774, 8.4766, 72000.0))
