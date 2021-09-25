@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.example.floodbusters">
 
     <uses-permission android:name="android.permission.INTERNET" />
-=======
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.example.floodbusters">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
->>>>>>> 4030c4f (Fix added huawei package)
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -26,13 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
         <activity
-<<<<<<< HEAD
-=======
-            android:name=".PreInformationActivity"
-            android:exported="true"
-            android:label="@string/title_activity_pre_information" />
-        <activity
->>>>>>> 4030c4f (Fix added huawei package)
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
