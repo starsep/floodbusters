@@ -17,21 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-        <LinearLayout
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/avatarHeader"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <androidx.compose.ui.platform.ComposeView
-                android:id="@+id/avatarHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-
-        </LinearLayout>
-
+            android:layout_height="64dp"
+            />
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"

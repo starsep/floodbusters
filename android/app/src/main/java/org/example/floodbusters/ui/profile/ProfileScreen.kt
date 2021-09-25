@@ -29,10 +29,11 @@ import org.example.floodbusters.dataholder.user
 @Composable
 fun ProfileScreen() {
     val scrollState = remember { ScrollState(initial = 0) }
-    ConstraintLayout(modifier = Modifier
-        .background(Color.White)
-        .fillMaxSize()
-        .scrollable(scrollState, Orientation.Vertical)
+    ConstraintLayout(
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxSize()
+            .scrollable(scrollState, Orientation.Vertical)
     ) {
         val (
             profileCard, generalInformationLabel, addressLabel, addressTextField,
@@ -41,12 +42,13 @@ fun ProfileScreen() {
         ) = createRefs()
         val userProfileState = remember { mutableStateOf(user) }
 
-        Card (backgroundColor = Color(0xFFF2F3F7), modifier = Modifier
+        Card(backgroundColor = Color(0xFFF2F3F7), modifier = Modifier
             .constrainAs(profileCard) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
-            .fillMaxHeight(0.4f).fillMaxWidth()) {
+            .fillMaxHeight(0.4f)
+            .fillMaxWidth()) {
             ConstraintLayout {
                 val (avatar, name, bloodGroupLabel, bloodGroup,
                     organDonorLabel, organDonor) = createRefs()
@@ -65,77 +67,112 @@ fun ProfileScreen() {
                         .border(width = 2.dp, color = Color.Gray)
 
                 )
-                Text(text = userProfileState.value.name, modifier = Modifier.constrainAs(name) {
-                    start.linkTo(avatar.start)
-                    end.linkTo(avatar.end)
-                    top.linkTo(avatar.bottom)
-                }, style = MaterialTheme.typography.h4)
+                Text(
+                    text = userProfileState.value.name, modifier = Modifier.constrainAs(name) {
+                        start.linkTo(avatar.start)
+                        end.linkTo(avatar.end)
+                        top.linkTo(avatar.bottom)
+                    }, style = MaterialTheme.typography.h4)
                 Text(text = "Blood Group", modifier = Modifier.constrainAs(bloodGroupLabel) {
                     top.linkTo(name.bottom)
+                    bottom.linkTo(bloodGroup.top)
                     start.linkTo(parent.start)
                     end.linkTo(organDonorLabel.start)
-                })
+                }, color = Color.Gray,
+                style = MaterialTheme.typography.h6)
                 Text(
                     text = userProfileState.value.bloodGroup,
                     modifier = Modifier.constrainAs(bloodGroup) {
                         top.linkTo(bloodGroupLabel.bottom)
+                        bottom.linkTo(parent.bottom)
                         start.linkTo(bloodGroupLabel.start)
                         end.linkTo(bloodGroupLabel.end)
-                    })
+                    },
+                    color = Color.DarkGray,
+                    style = MaterialTheme.typography.h5,
+                )
                 Text(text = "Organ Donor", modifier = Modifier.constrainAs(organDonorLabel) {
                     top.linkTo(name.bottom)
+                    bottom.linkTo(organDonor.top)
                     start.linkTo(bloodGroupLabel.end)
                     end.linkTo(parent.end)
-                })
+                }, color = Color.Gray,
+                style = MaterialTheme.typography.h6)
 
                 Text(
                     text = if (userProfileState.value.organDonor) "yes" else "no",
                     modifier = Modifier.constrainAs(organDonor) {
                         top.linkTo(organDonorLabel.bottom)
+                        bottom.linkTo(parent.bottom)
                         start.linkTo(organDonorLabel.start)
                         end.linkTo(organDonorLabel.end)
-                    })
+                    },
+                    color = Color.DarkGray,
+                    style = MaterialTheme.typography.h5,
+                )
             }
         }
-        Text(text = "General Information", modifier = Modifier.constrainAs(generalInformationLabel) {
-            top.linkTo(profileCard.bottom)
-            start.linkTo(parent.start)
-        })
+
+        Text(
+            text = "General Information",
+            modifier = Modifier.constrainAs(generalInformationLabel) {
+                top.linkTo(profileCard.bottom)
+                start.linkTo(addressTextField.start)
+            }.padding(8.dp),
+            style = MaterialTheme.typography.h6)
         Text(text = "Address", modifier = Modifier.constrainAs(addressLabel) {
             top.linkTo(generalInformationLabel.bottom)
-            start.linkTo(parent.start)
-        })
-        TextField(value = userProfileState.value.address, onValueChange = { userProfileState.value = userProfileState.value.copy(address = it) }, modifier = Modifier.constrainAs(addressTextField) {
-            top.linkTo(addressLabel.bottom)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        })
+            start.linkTo(addressTextField.start)
+        }, style = MaterialTheme.typography.overline)
+        TextField(
+            value = userProfileState.value.address,
+            onValueChange = { userProfileState.value = userProfileState.value.copy(address = it) },
+            modifier = Modifier.constrainAs(addressTextField) {
+                top.linkTo(addressLabel.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            })
         Text(text = "Floor Number", modifier = Modifier.constrainAs(floorNumberLabel) {
             top.linkTo(addressTextField.bottom)
-            start.linkTo(parent.start)
-        })
-        TextField(value = userProfileState.value.floorNumber, onValueChange = { userProfileState.value = userProfileState.value.copy(floorNumber = it) }, modifier = Modifier.constrainAs(floorNumberTextField) {
-            top.linkTo(floorNumberLabel.bottom)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        })
+            start.linkTo(floorNumberTextField.start)
+        }, style = MaterialTheme.typography.overline)
+        TextField(
+            value = userProfileState.value.floorNumber,
+            onValueChange = {
+                userProfileState.value = userProfileState.value.copy(floorNumber = it)
+            },
+            modifier = Modifier.constrainAs(floorNumberTextField) {
+                top.linkTo(floorNumberLabel.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            })
         Text(text = "City, Postal Number", modifier = Modifier.constrainAs(cityPostalNumberLabel) {
             top.linkTo(floorNumberTextField.bottom)
-            start.linkTo(parent.start)
-        })
-        TextField(value = userProfileState.value.cityPostalCode, onValueChange = { userProfileState.value = userProfileState.value.copy(cityPostalCode = it) }, modifier = Modifier.constrainAs(cityPostalNumberTextField) {
-            top.linkTo(cityPostalNumberLabel.bottom)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        })
+            start.linkTo(cityPostalNumberTextField.start)
+        }, style = MaterialTheme.typography.overline)
+        TextField(
+            value = userProfileState.value.cityPostalCode,
+            onValueChange = {
+                userProfileState.value = userProfileState.value.copy(cityPostalCode = it)
+            },
+            modifier = Modifier.constrainAs(cityPostalNumberTextField) {
+                top.linkTo(cityPostalNumberLabel.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            })
         Text(text = "Mobile Number", modifier = Modifier.constrainAs(mobileNumberLabel) {
             top.linkTo(cityPostalNumberTextField.bottom)
-            start.linkTo(parent.start)
-        })
-        TextField(value = userProfileState.value.mobileNumber, onValueChange = { userProfileState.value = userProfileState.value.copy(mobileNumber = it) },modifier = Modifier.constrainAs(mobileNumberTextField) {
-            top.linkTo(mobileNumberLabel.bottom)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        })
+            start.linkTo(mobileNumberTextField.start)
+        }, style = MaterialTheme.typography.overline)
+        TextField(
+            value = userProfileState.value.mobileNumber,
+            onValueChange = {
+                userProfileState.value = userProfileState.value.copy(mobileNumber = it)
+            },
+            modifier = Modifier.constrainAs(mobileNumberTextField) {
+                top.linkTo(mobileNumberLabel.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            })
     }
 }

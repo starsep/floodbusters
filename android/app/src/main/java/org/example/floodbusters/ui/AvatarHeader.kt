@@ -2,6 +2,7 @@ package org.example.floodbusters.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
@@ -19,12 +20,12 @@ import org.example.floodbusters.dataholder.User
 @Composable
 fun AvatarHeader(user: User, modifier: Modifier) {
     val image: Painter = painterResource(id = R.drawable.user_avatar)
-    ConstraintLayout(modifier = modifier) {
+    ConstraintLayout(modifier = modifier.height(64.dp)) {
         val (avatar, name) = createRefs()
         Image(painter = image, contentDescription = "user avatar",
             Modifier
                 .padding(8.dp)
-                .size(32.dp)
+                .size(64.dp)
                 .constrainAs(avatar) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)

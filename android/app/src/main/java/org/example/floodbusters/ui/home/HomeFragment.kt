@@ -8,7 +8,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import androidx.compose.foundation.layout.height
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -42,7 +44,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.text.observe(viewLifecycleOwner, {
             binding.avatarHeader.setContent {
-                AvatarHeader(user.copy(name = it), modifier = Modifier)
+                AvatarHeader(user.copy(name = it), modifier = Modifier.height(64.dp))
             }
         })
 

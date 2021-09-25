@@ -41,7 +41,7 @@ fun GuidanceScreen() {
     val angle1 = remember { Animatable(initialValue = 160f) }
     val angle2 = remember { Animatable(initialValue = 220f) }
     val angle3 = remember { Animatable(initialValue = 300f) }
-    val volume = remember { mutableStateOf(0f) }
+    val volume = remember { mutableStateOf(0.4f) }
     val messages = listOf(
         Message(sos = true, text = "Hi Anna, according to the information we received, you are now in the building on the 34th Street Side of the Lake", time = "16:45", incoming = true),
         Message(sos = false, text = "I will then guide you to a safe place. It is important that you stay calm, ok?", time = "16:47", incoming = true),
