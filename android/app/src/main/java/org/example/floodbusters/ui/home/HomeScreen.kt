@@ -19,12 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import org.example.floodbusters.R
 import org.example.floodbusters.api.user
-import org.example.floodbusters.services.AlarmDetection
+//import org.example.floodbusters.services.AlarmDetection
 import org.example.floodbusters.ui.AvatarHeader
 
 @Composable
 fun HomeScreen() {
-    AlarmDetection().startDetection()
+    //AlarmDetection().startDetection()
     Column(modifier = Modifier.background(Color.White)) {
         AvatarHeader(user, modifier = Modifier.height(64.dp))
         Column {
